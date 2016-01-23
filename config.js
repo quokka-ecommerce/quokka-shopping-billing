@@ -3,5 +3,5 @@
  */
 module.exports = {
     'port': '3100',
-    'database': 'mongodb://localhost:27017/test'
+    'dbURL': 'mongodb://localhost:27017/test'
 };

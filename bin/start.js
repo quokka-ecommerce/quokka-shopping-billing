@@ -7,9 +7,10 @@
  */
 
 var app = require('../server');
-var debug = require('debug')('user_management:server');
+var debug = require('debug')('shopping_billing:server');
 var http = require('http');
 var config = require('../config');
+var DBHelper = require('quokka-dao-nodejs');
 
 /**
  * Get port from environment and store in Express.
@@ -31,7 +32,8 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
+DBHelper.connectDB(config.dbURL);
+process.on('exit', clearUp);
 /**
  * Normalize a port into a number, string, or false.
  */
@@ -90,4 +92,8 @@ function onListening() {
         ? 'pipe ' + addr
         : 'port ' + addr.port;
     debug('Listening on ' + bind);
+}
+
+function clearUp(){
+    DBHelper.closeDB();
 }

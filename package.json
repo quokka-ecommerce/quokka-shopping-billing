@@ -26,6 +26,7 @@
     "express-session": "^1.12.1",
     "mongodb": "^2.1.0",
     "mongoose": "^4.2.9",
-    "morgan": "^1.6.1"
+    "morgan": "^1.6.1",
+    "quokka-dao-nodejs": "^0.0.1"
   }
 }

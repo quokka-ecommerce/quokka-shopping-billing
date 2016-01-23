@@ -6,7 +6,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var apiRoutes = require('./routes/api');
+var shoppingCartRoute = require('./routes/shoppingCart');
+var checkout = require('./routes/checkout');
+var order = require('./routes/order');
 
 var app = express();
 
@@ -15,8 +17,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/api', apiRoutes);
-//app.use('/users', users);
+app.use('/api/shoppingcart', shoppingCartRoute);
+//app.use('/api/checkout', checkout);
+//app.use('/api/order', order);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
