@@ -1,6 +1,6 @@
 {
   "name": "quokka-user-management",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "user management service",
   "main": "server.js",
   "scripts": {

@@ -166,6 +166,26 @@ ShoppingCartCtrl.removeProduct = function(userId, sku, callback){
     });
 };
 
+ShoppingCartCtrl.clear = function(userId, callback){
+    getCartByUser(userId, function(err, cart){
+        if(err){
+            console.log(TAG, 'getCart: ' + err);
+            callback(false);
+        }else{
+            if(cart){
+                cart.items.splice(0, cart.items.length);
+                cart.markModified('items');
+                cart.save(function(){
+                    callback(true);
+                });
+            }else{
+                callback(false);
+                console.log(TAG, 'cart for user(' + userId + ') is not exist');
+            }
+        }
+    });
+};
+
 ShoppingCartCtrl.productQtyIncrement = function(userId, sku, callback){
     getCartByUser(userId, function(err, cart){
         if(err){

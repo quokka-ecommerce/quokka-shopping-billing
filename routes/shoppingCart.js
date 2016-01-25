@@ -18,9 +18,9 @@ router.get('/:userId', function(req, res) {
     });
 });
 
-/* push all products into shoppingcart */
-router.post('/addall/:userId', function(req, res, next) {
-    var userId  = req.params.userId;
+/* put all products into shoppingcart */
+router.post('/postcart', function(req, res, next) {
+    var userId  = req.body.userId;
     var items = req.body.items;
     ShoppingCartCtrl.addAll(userId, JSON.parse(items), function(isSucceed){
         if(isSucceed){
@@ -35,10 +35,10 @@ router.post('/addall/:userId', function(req, res, next) {
 
 
 /* add a product into shoppingcart */
-router.post('/add/:userId', function(req, res, next) {
-    var userId  = req.params.userId;
-    var item = req.body;
-    ShoppingCartCtrl.addProduct(userId, item, function(isSucceed){
+router.post('/add', function(req, res, next) {
+    var userId  = req.body.userId;
+    var item = req.body.item;
+    ShoppingCartCtrl.addProduct(userId, JSON.parse(item), function(isSucceed){
         if(isSucceed){
             res.writeHead(200);
             res.end("OK");
@@ -49,10 +49,24 @@ router.post('/add/:userId', function(req, res, next) {
     });
 });
 
-/* remove a product from shoppingcart */
-router.delete('/remove/:userId', function(req, res, next) {
+/* clear shoppingcart */
+router.delete('/clear/:userId', function(req, res, next) {
     var userId  = req.params.userId;
-    var sku = req.body.sku;
+    ShoppingCartCtrl.clear(userId, function(isSucceed){
+        if(isSucceed){
+            res.writeHead(200);
+            res.end("OK");
+        }else{
+            res.writeHead(404);
+            res.end("not exist");
+        }
+    });
+});
+
+/* remove a product from shoppingcart */
+router.delete('/remove/:userId/:sku', function(req, res, next) {
+    var userId  = req.params.userId;
+    var sku = req.params.sku;
     ShoppingCartCtrl.removeProduct(userId, sku, function(isSucceed){
         if(isSucceed){
             res.writeHead(200);
@@ -65,8 +79,8 @@ router.delete('/remove/:userId', function(req, res, next) {
 });
 
 /* product increment */
-router.post('/increment/:userId', function(req, res, next) {
-    var userId  = req.params.userId;
+router.post('/increment', function(req, res, next) {
+    var userId  = req.body.userId;
     var sku = req.body.sku;
     ShoppingCartCtrl.productQtyIncrement(userId, sku, function(isSucceed){
         if(isSucceed){
@@ -80,8 +94,8 @@ router.post('/increment/:userId', function(req, res, next) {
 });
 
 /* product decrement */
-router.post('/decrement/:userId', function(req, res, next) {
-    var userId  = req.params.userId;
+router.post('/decrement', function(req, res, next) {
+    var userId  = req.body.userId;
     var sku = req.body.sku;
     ShoppingCartCtrl.productQtyDecrement(userId, sku, function(isSucceed){
         if(isSucceed){
