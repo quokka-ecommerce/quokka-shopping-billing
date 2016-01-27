@@ -7,7 +7,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var shoppingCartRoute = require('./routes/shoppingCart');
-var checkout = require('./routes/checkout');
+var checkoutRoute = require('./routes/checkout');
 var order = require('./routes/order');
 
 var app = express();
@@ -18,7 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/api/shoppingcart', shoppingCartRoute);
-//app.use('/api/checkout', checkout);
+app.use('/api/checkout', checkoutRoute);
 //app.use('/api/order', order);
 
 

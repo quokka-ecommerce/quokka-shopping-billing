@@ -3,17 +3,17 @@
  */
 var ShoppingCartCtrl = exports;
 var TAG = 'ShoppingCartCtrl:';
-var schema = 'shopping_cart';
+var schema = 'ShoppingCart';
 var DBHelper = require('quokka-dao-nodejs');
 var MAX_QTY = 1000;
 
 function getCartByUser(userId, callback){
-    DBHelper.queryOneByClauseInCollection(schema, {userId: userId}, callback);
+    DBHelper.queryOneByClauseInCollection(schema, {_id: userId}, callback);
 }
 
 function initCartForUser(userId, items, callback){
     DBHelper.addOneDocToCollection(schema, {
-        userId: userId,
+        _id: userId,
         isActive: true,
         items: items}, callback);
 }
